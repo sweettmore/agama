@@ -3,137 +3,210 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tugas Agama - Eka Salsabila - Syahadatain</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <title>Cahaya Peradaban | Portal Ilmu Islami</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Amiri:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
-        body { font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        .gradient-text { background: linear-gradient(90deg, #fbbf24, #f59e0b); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .hero-bg { background: radial-gradient(circle at top right, #1e40af, #1e3a8a, #172554); }
-        .card-hover:hover { transform: translateY(-10px); transition: all 0.3s ease; }
-        .islamic-pattern { background-image: url('https://www.transparenttextures.com/patterns/islamic-art.png'); opacity: 0.1; }
+        :root {
+            --primary: #064e3b;
+            --secondary: #b45309;
+            --accent: #10b981;
+            --bg: #f1f5f9;
+            --white: #ffffff;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; scroll-behavior: smooth; }
+        body { font-family: 'Poppins', sans-serif; background: var(--bg); color: #1e293b; display: flex; }
+
+        /* SIDEBAR */
+        .sidebar {
+            width: 300px; background: var(--white); height: 100vh;
+            position: fixed; left: 0; top: 0; border-right: 1px solid #e2e8f0;
+            display: flex; flex-direction: column; z-index: 1000;
+        }
+
+        .sidebar-header { 
+            padding: 30px; background: var(--primary); color: white; 
+            cursor: pointer; text-align: center;
+        }
+        .sidebar-header h2 { font-family: 'Amiri', serif; font-size: 1.8rem; }
+        .sidebar-header p { font-size: 0.7rem; opacity: 0.8; letter-spacing: 1px; }
+
+        .menu-list { flex: 1; overflow-y: auto; padding: 15px; }
+        .menu-item {
+            width: 100%; padding: 12px 15px; margin-bottom: 8px;
+            border: none; background: none; text-align: left;
+            font-size: 0.85rem; color: #475569; border-radius: 10px;
+            cursor: pointer; transition: 0.3s; display: flex; align-items: center; gap: 12px;
+        }
+        .menu-item i { color: var(--secondary); width: 20px; text-align: center; }
+        .menu-item:hover { background: #f0fdf4; color: var(--primary); transform: translateX(5px); }
+        .menu-item.active { background: var(--primary); color: white; }
+        .menu-item.active i { color: white; }
+
+        /* MAIN AREA */
+        .main-container { margin-left: 300px; flex: 1; min-height: 100vh; position: relative; }
+
+        /* HOME VIEW */
+        #home-view { padding: 40px; display: block; animation: fadeIn 0.5s; }
+        
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary), #065f46), url('https://www.transparenttextures.com/patterns/islamic-art.png');
+            border-radius: 30px; padding: 60px; color: white; margin-bottom: 30px;
+            box-shadow: 0 20px 40px rgba(6, 78, 59, 0.15);
+        }
+        .hero-section h1 { font-family: 'Amiri', serif; font-size: 3.5rem; margin-bottom: 15px; }
+        .hero-section p { font-size: 1.2rem; max-width: 700px; opacity: 0.9; line-height: 1.6; }
+
+        .bio-card {
+            background: white; padding: 20px 30px; border-radius: 20px;
+            margin-bottom: 30px; border-left: 8px solid var(--accent); box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        .bio-info p { font-size: 0.9rem; color: #64748b; }
+
+        /* PDF HOME BOX */
+        .pdf-home-box {
+            background: white; border: 2px solid #e2e8f0; 
+            padding: 40px; border-radius: 25px; text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.03);
+        }
+        .pdf-home-box h3 { font-family: 'Amiri', serif; font-size: 2rem; color: var(--primary); margin-bottom: 10px; }
+        .btn-main-link {
+            display: inline-block; margin-top: 20px; padding: 15px 35px;
+            background: var(--primary); color: white; text-decoration: none;
+            border-radius: 50px; font-weight: bold; transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(6, 78, 59, 0.3);
+        }
+        .btn-main-link:hover { background: var(--secondary); transform: translateY(-3px); }
+
+        /* READING VIEW */
+        #reading-view { padding: 40px; display: none; animation: slideUp 0.5s; }
+        .back-nav {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 12px 25px; background: var(--primary); color: white;
+            border-radius: 50px; cursor: pointer; margin-bottom: 30px;
+            font-weight: 600; border: none;
+        }
+
+        .materi-box {
+            background: white; padding: 60px; border-radius: 30px;
+            max-width: 900px; margin: 0 auto; box-shadow: 0 15px 50px rgba(0,0,0,0.05);
+        }
+        .materi-box h2 { font-family: 'Amiri', serif; font-size: 2.5rem; color: var(--primary); margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; }
+        .materi-box p { font-size: 1.1rem; line-height: 1.8; color: #334155; text-align: justify; }
+
+        .source-footer { margin-top: 40px; padding: 15px; background: #f8fafc; border-radius: 10px; font-style: italic; color: #64748b; font-size: 0.85rem; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+
+        @media (max-width: 1024px) {
+            .sidebar { width: 100%; height: auto; position: relative; }
+            body { flex-direction: column; }
+            .main-container { margin-left: 0; }
+            .materi-box { padding: 30px; }
+        }
     </style>
 </head>
-<body class="bg-slate-50">
+<body>
 
-    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200">
-        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <div class="bg-blue-600 p-2 rounded-lg text-white">
-                    <i class="fas fa-star-and-crescent text-xl"></i>
-                </div>
-                <span class="font-extrabold text-blue-900 tracking-tight">SYAHADATAIN.EDU</span>
-            </div>
-            <div class="hidden md:flex items-center gap-6">
-                <div class="text-right">
-                    <p class="text-xs font-bold text-blue-600 uppercase tracking-widest">Eka Salsabila</p>
-                    <p class="text-[10px] text-slate-500 font-medium">NIM: 312310277 | Kelas: I233D</p>
-                </div>
-                <div class="h-8 w-[1px] bg-slate-200"></div>
-                <p class="text-[10px] text-slate-400 font-bold uppercase">Mata Kuliah: Agama</p>
-            </div>
+    <div class="sidebar">
+        <div class="sidebar-header" onclick="showHome()">
+            <h2>Cahaya Peradaban</h2>
+            <p>MENUJU MASYARAKAT MADANI</p>
         </div>
-    </nav>
-
-    <header class="relative hero-bg pt-24 pb-40 px-6 overflow-hidden">
-        <div class="absolute inset-0 islamic-pattern"></div>
-        <div class="relative z-10 max-w-5xl mx-auto text-center">
-            <span class="inline-block px-4 py-1.5 bg-blue-500/20 border border-blue-400/30 rounded-full text-blue-200 text-xs font-bold mb-6 tracking-widest uppercase">Pondasi Iman & Takwa</span>
-            <h1 class="text-5xl md:text-7xl font-extrabold text-white mb-6 leading-tight">
-                Kekuatan <span class="gradient-text">Dua Kalimat</span> Kesaksian
-            </h1>
-            <p class="text-blue-100 text-lg md:text-xl max-w-2xl mx-auto font-light leading-relaxed">
-                Mempelajari makna mendalam dan urgensi Syahadatain sebagai revolusi tauhid yang membebaskan jiwa manusia.
-            </p>
+        <div class="menu-list">
+            <button class="menu-item" onclick="loadMateri('m1', this)"><i class="fas fa-key"></i> 1. Konsep Syahadatain</button>
+            <button class="menu-item" onclick="loadMateri('m2', this)"><i class="fas fa-user"></i> 2. Konsep Manusia</button>
+            <button class="menu-item" onclick="loadMateri('m3', this)"><i class="fas fa-brain"></i> 3. Paradigma Qur'ani</button>
+            <button class="menu-item" onclick="loadMateri('m4', this)"><i class="fas fa-book-quran"></i> 4. Kisah Al-Qur'an</button>
+            <button class="menu-item" onclick="loadMateri('m5', this)"><i class="fas fa-shield-halved"></i> 5. Ghozwatul Fikri</button>
+            <button class="menu-item" onclick="loadMateri('m6', this)"><i class="fas fa-mask"></i> 6. Syaithan & Iblis</button>
+            <button class="menu-item" onclick="loadMateri('m7', this)"><i class="fas fa-hand-holding-heart"></i> 7. Fiqh Da’wah</button>
+            <button class="menu-item" onclick="loadMateri('m8', this)"><i class="fas fa-users-rectangle"></i> 8. Masyarakat Madani</button>
+            <button class="menu-item" onclick="loadMateri('m9', this)"><i class="fas fa-triangle-exclamation"></i> 9. Kemungkaran Umat</button>
+            <button class="menu-item" onclick="loadMateri('m10', this)"><i class="fas fa-leaf"></i> 10. Adab 1 (Safar & Makan)</button>
+            <button class="menu-item" onclick="loadMateri('m11', this)"><i class="fas fa-shirt"></i> 11. Adab 2 (Pakaian)</button>
+            <button class="menu-item" onclick="loadMateri('m12', this)"><i class="fas fa-hourglass-end"></i> 12. Manajemen Kematian 1</button>
+            <button class="menu-item" onclick="loadMateri('m13', this)"><i class="fas fa-kaaba"></i> 13. Manajemen Kematian 2</button>
         </div>
-    </header>
+    </div>
 
-    <main class="max-w-7xl mx-auto px-6 -mt-24 relative z-20 pb-20">
+    <div class="main-container">
         
-        <section class="grid md:grid-cols-2 gap-8 mb-20">
-            <div class="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-blue-900/5 card-hover border border-slate-100">
-                <div class="w-16 h-16 bg-blue-50 rounded-2xl flex items-center justify-center text-blue-600 text-3xl mb-8">
-                    <i class="fas fa-fingerprint"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-2">Syahadat Tauhid</h3>
-                <p class="text-blue-600 font-serif text-2xl mb-6 italic font-medium">"Laa ilaha illallah"</p>
-                <p class="text-slate-600 leading-relaxed">
-                    Pengakuan murni bahwa Allah adalah satu-satunya otoritas tertinggi. Ini adalah deklarasi kemerdekaan jiwa agar tidak tunduk pada materi, jabatan, atau sesama makhluk, melainkan hanya kepada Sang Pencipta.
-                </p>
+        <div id="home-view">
+            <div class="hero-section">
+                <h1>Assalamu'alaikum.</h1>
+                <p>Portal edukasi Islami yang disusun oleh <strong>Eka Salsabila</strong> untuk memfasilitasi pembelajaran materi keagamaan secara terstruktur.</p>
             </div>
-            <div class="bg-white p-10 rounded-[2.5rem] shadow-xl shadow-blue-900/5 card-hover border border-slate-100">
-                <div class="w-16 h-16 bg-amber-50 rounded-2xl flex items-center justify-center text-amber-600 text-3xl mb-8">
-                    <i class="fas fa-compass"></i>
-                </div>
-                <h3 class="text-2xl font-bold text-slate-900 mb-2">Syahadat Rasul</h3>
-                <p class="text-amber-600 font-serif text-2xl mb-6 italic font-medium">"Muhammad Rasulullah"</p>
-                <p class="text-slate-600 leading-relaxed">
-                    Komitmen untuk menjadikan Nabi Muhammad SAW sebagai satu-satunya <i>role model</i> dalam menjalani kehidupan. Syahadat ini berarti kita sepakat bahwa metode terbaik untuk menyembah Allah adalah dengan mengikuti tuntunan Rasul-Nya.
-                </p>
-            </div>
-        </section>
 
-        <section class="mb-20">
-            <div class="text-center mb-12">
-                <h2 class="text-3xl font-extrabold text-slate-900 uppercase tracking-tighter">Urgensi Syahadatain</h2>
-                <p class="text-slate-500 mt-2">Mengapa dua kalimat ini bersifat mendesak dalam kehidupan?</p>
-            </div>
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
-                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center card-hover">
-                    <div class="text-blue-600 mb-4 text-4xl"><i class="fas fa-door-open"></i></div>
-                    <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm tracking-widest">Madkhalul Islam</h4>
-                    <p class="text-xs text-slate-500">Pintu gerbang utama untuk menjadi bagian dari umat Muslim.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center card-hover">
-                    <div class="text-emerald-600 mb-4 text-4xl"><i class="fas fa-anchor"></i></div>
-                    <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm tracking-widest">Al-Asasu</h4>
-                    <p class="text-xs text-slate-500">Fondasi dari seluruh bangunan amal ibadah kita.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center card-hover">
-                    <div class="text-purple-600 mb-4 text-4xl"><i class="fas fa-bolt"></i></div>
-                    <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm tracking-widest">Inqilab</h4>
-                    <p class="text-xs text-slate-500">Titik tolak perubahan perilaku dari kegelapan menuju cahaya.</p>
-                </div>
-                <div class="bg-white p-8 rounded-3xl border border-slate-100 shadow-sm text-center card-hover">
-                    <div class="text-rose-600 mb-4 text-4xl"><i class="fas fa-shield-heart"></i></div>
-                    <h4 class="font-bold text-slate-800 mb-2 uppercase text-sm tracking-widest">Asy-Syarthu</h4>
-                    <p class="text-xs text-slate-500">Syarat mutlak agar amal kebaikan diterima oleh Allah.</p>
+            <div class="bio-card">
+                <div class="bio-info">
+                    <p><strong>Nama:</strong> Eka Salsabila | <strong>NIM:</strong> 312310277 | <strong>Kelas:</strong> I233D</p>
                 </div>
             </div>
-        </section>
 
-        <section class="bg-slate-900 rounded-[3rem] p-12 text-center relative overflow-hidden">
-            <div class="absolute inset-0 islamic-pattern opacity-20"></div>
-            <div class="relative z-10">
-                <i class="fas fa-quote-left text-blue-500 text-5xl mb-8"></i>
-                <p class="text-2xl md:text-3xl font-medium text-white max-w-3xl mx-auto italic leading-relaxed">
-                    "Syahadat bukan hanya ucapan lisan, tapi getaran hati yang menggerakkan seluruh kehidupan."
-                </p>
-                <div class="mt-10 h-1 w-24 bg-blue-600 mx-auto rounded-full"></div>
-                <p class="mt-6 text-blue-300 font-bold uppercase tracking-widest text-xs">Refleksi Tugas Agama - Eka Salsabila</p>
-            </div>
-        </section>
-
-    </main>
-
-    <footer class="bg-white border-t border-slate-200 py-16">
-        <div class="max-w-7xl mx-auto px-6 text-center">
-            <div class="flex flex-col items-center">
-                <p class="text-slate-400 text-xs font-bold uppercase tracking-widest mb-4">Mahasiswa Penyusun</p>
-                <h5 class="text-2xl font-black text-slate-900 mb-1">Eka Salsabila</h5>
-                <p class="text-blue-600 font-bold mb-4">NIM: 312310277 | Kelas I233D</p>
-                <div class="flex gap-4 text-slate-400 mb-8">
-                    <i class="fab fa-instagram hover:text-blue-600 cursor-pointer"></i>
-                    <i class="fab fa-linkedin hover:text-blue-600 cursor-pointer"></i>
-                    <i class="fab fa-github hover:text-blue-600 cursor-pointer"></i>
-                </div>
-                <p class="text-slate-400 text-[10px] uppercase font-bold tracking-[0.3em]">
-                    &copy; 2026 Universitas Pelita Bangsa. Semua Hak Cipta Dilindungi.
-                </p>
+            <div class="pdf-home-box">
+                <i class="fas fa-file-pdf" style="font-size: 3rem; color: #e11d48; margin-bottom: 15px;"></i>
+                <h3>KISAH PARA NABI PRA-IBRAHIM</h3>
+                <p style="color: #64748b; max-width: 600px; margin: 0 auto;">Klik tombol di bawah ini untuk mengakses dokumen lengkap materi Kisah Nabi Pra-Ibrahim yang diterbitkan oleh Kemenag RI sebagai referensi pembelajaran.</p>
+                <a href="https://pustakalajnah.kemenag.go.id/uploads/Kisah_Nabi_Pra-Ibrahim.pdf" target="_blank" class="btn-main-link">
+                    <i class="fas fa-external-link-alt"></i> Buka Dokumen Utama
+                </a>
             </div>
         </div>
-    </footer>
 
+        <div id="reading-view">
+            <button class="back-nav" onclick="showHome()">
+                <i class="fas fa-home"></i> Kembali ke Beranda
+            </button>
+            <div id="content-container" class="materi-box"></div>
+        </div>
+
+    </div>
+
+    <script>
+        const dataMateri = {
+            m1: { title: "1. Konsep Syahadatain", body: "Syahadatain adalah gerbang masuk Islam yang menjadi landasan utama bagi seluruh amal ibadah seorang Muslim.", source: "Kitab At-Tauhid" },
+            m2: { title: "2. Konsep Manusia", body: "Dalam Islam, manusia dipandang sebagai makhluk mulia yang diciptakan untuk menjadi abid (hamba) sekaligus khalifah di bumi.", source: "Ihya Ulumuddin" },
+            m3: { title: "3. Paradigma Qur’ani", body: "Menjadikan nilai-nilai Al-Qur'an sebagai cara pandang utama dalam menyelesaikan setiap problematika kehidupan.", source: "Konsep Pendidikan Islam" },
+            m4: { 
+                title: "4. Kisah-Kisah Dalam Al Qur’an", 
+                body: "Al-Qur'an berisi berbagai kisah umat terdahulu yang tujuannya adalah sebagai ibrah (pelajaran) bagi orang-orang yang berakal. Kisah ini menjadi bukti kebenaran wahyu Allah dan penguat hati bagi orang beriman.", 
+                source: "Qashashul Anbiya - Ibnu Katsir"
+            },
+            m5: { title: "5. Konsep Ghozwatul Fikri", body: "Serangan pemikiran atau perang intelektual yang bertujuan menjauhkan umat Muslim dari prinsip-prinsip agamanya.", source: "Abu Al-Hasan An-Nadwi" },
+            m6: { title: "6. Mengenal Syaithan dan Iblis", body: "Mempelajari asal-usul dan cara kerja syaithan agar kita dapat membentengi diri dari godaan yang menjerumuskan.", source: "Ibnu Jauzi" },
+            m7: { title: "7. Fiqh Da’wah", body: "Etika dan strategi dalam mengajak manusia kepada kebenaran dengan cara yang santun sesuai tuntunan Nabi SAW.", source: "Mustafa Masyhur" },
+            m8: { title: "8. Masyarakat Madani", body: "Membangun tatanan sosial yang berkeadilan, toleran, dan beradab berlandaskan nilai-nilai ketuhanan.", source: "Sejarah Politik Islam" },
+            m9: { title: "9. Kemungkaran Umat", body: "Identifikasi berbagai bentuk penyimpangan moral di tengah masyarakat dan upaya penanggulangannya.", source: "Fatwa MUI" },
+            m10: { title: "10. Adab 1 (Safar & Makan)", body: "Implementasi adab harian dalam perjalanan dan saat makan guna menjaga keberkahan dan kesehatan diri.", source: "Al-Adab al-Mufrad" },
+            m11: { title: "11. Adab 2 (Pakaian)", body: "Pedoman berpakaian bagi Muslim dan Muslimah yang mengedepankan fungsi menutup aurat dan kesopanan.", source: "Riyadhus Shalihin" },
+            m12: { title: "12. Manajemen Kematian 1", body: "Mempersiapkan diri menghadapi kematian dengan memperbanyak amal shalih sebagai bekal abadi.", source: "At-Tadzkirah" },
+            m13: { title: "13. Manajemen Kematian 2", body: "Memahami perjalanan ruh dan kehidupan di alam barzakh untuk menumbuhkan rasa takut kepada Allah.", source: "Ibnu Qayyim" }
+        };
+
+        function loadMateri(key, btn) {
+            document.getElementById('home-view').style.display = 'none';
+            document.getElementById('reading-view').style.display = 'block';
+            document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+
+            const content = dataMateri[key];
+            document.getElementById('content-container').innerHTML = `
+                <h2>${content.title}</h2>
+                <p>${content.body}</p>
+                <div class="source-footer"><strong>Referensi:</strong> ${content.source}</div>
+            `;
+            window.scrollTo(0,0);
+        }
+
+        function showHome() {
+            document.getElementById('home-view').style.display = 'block';
+            document.getElementById('reading-view').style.display = 'none';
+            document.querySelectorAll('.menu-item').forEach(b => b.classList.remove('active'));
+            window.scrollTo(0,0);
+        }
+    </script>
 </body>
 </html>
